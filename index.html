@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDS 合作成果报告 2026 (浅蓝)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Inter:wght@500;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0b0e17; --bg2:#111624; --card:#151b2b; --line:rgba(255,255,255,.08);
+  --text:#eef1f7; --sub:#9aa3b5; --dim:#6b7488;
+  --blue:#3d8bfd; --blue2:#1e5fd6; --gold:#e3b866; --gold2:#b88a3a;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:'Inter','PingFang SC','Noto Sans SC','Hiragino Sans GB','Microsoft YaHei',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+html{scroll-snap-type:y proximity}
+body{overflow-x:hidden}
+.num{font-family:'Inter','PingFang SC',sans-serif;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(22px,4vw,56px);width:100%}
+main>section{min-height:calc(100svh - 60px);display:flex;align-items:center;scroll-snap-align:start}
+.split{display:grid;gap:40px;align-items:center}
+@media(min-width:900px){
+  .split{grid-template-columns:1fr 1.05fr;gap:64px}
+  .hero h1{font-size:60px}
+  h2{font-size:46px!important}
+  .lead{font-size:17px}
+  .cats{grid-template-columns:1fr 1fr}
+  .stage{margin-top:0!important;height:460px!important}
+}
+.bgglow{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(60% 40% at 15% 0%,rgba(61,139,253,.18),transparent 70%),
+             radial-gradient(50% 35% at 100% 30%,rgba(227,184,102,.10),transparent 70%),
+             radial-gradient(70% 40% at 50% 110%,rgba(30,95,214,.15),transparent 70%)}
+.grid{position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.35;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:radial-gradient(80% 60% at 50% 30%,#000 30%,transparent 80%)}
+main{position:relative;z-index:1}
+section{padding:72px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;font-family:'Inter',sans-serif}
+h2{font-size:clamp(26px,5vw,38px);font-weight:900;margin:10px 0 8px;line-height:1.2}
+.lead{color:var(--sub);font-size:15px;line-height:1.7;margin:0}
+.sample{display:inline-block;margin-left:8px;padding:3px 9px;border-radius:99px;border:1px dashed rgba(227,184,102,.6);color:var(--gold);font-size:11px;font-weight:700;vertical-align:middle;letter-spacing:.05em}
+
+/* top bar */
+.top{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(11,14,23,.6);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:10px}
+.top .brand{margin-right:auto}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-family:'Inter',sans-serif;letter-spacing:.04em}
+.brand .x{color:var(--dim);font-weight:500}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px}
+.seg a{padding:8px 14px;border-radius:99px;color:var(--sub);text-decoration:none;font-size:13px;font-weight:700;font-family:'Inter',sans-serif}
+.seg a.on{background:linear-gradient(180deg,#24304a,#1a2338);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+
+/* hero */
+.hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;justify-content:center;padding:48px 0 64px}
+.hero h1{font-size:clamp(30px,6.4vw,56px);font-weight:900;line-height:1.15;margin:14px 0 10px}
+.hero h1 .g{background:linear-gradient(90deg,#f3d699,var(--gold) 50%,#c6923f);-webkit-background-clip:text;background-clip:text;color:transparent}
+.counter{margin-top:38px;padding:30px 26px;border-radius:24px;position:relative;overflow:hidden;
+  background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));border:1px solid rgba(255,255,255,.1);
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.08);transform-style:preserve-3d;transition:transform .2s ease-out}
+.counter::before{content:"";position:absolute;inset:-1px;border-radius:24px;padding:1px;background:linear-gradient(130deg,rgba(227,184,102,.7),transparent 40%,transparent 60%,rgba(61,139,253,.6));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.counter .lbl{font-size:13px;color:var(--sub);font-weight:500;display:flex;justify-content:space-between}
+.counter .big{font-size:clamp(44px,11vw,88px);font-weight:900;line-height:1;margin:12px 0 6px}
+.counter .big small{font-size:.38em;color:var(--sub);font-weight:700;margin-left:6px}
+.counter .row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;font-weight:800;font-size:15px}
+.pill.up{background:rgba(227,184,102,.14);color:var(--gold);border:1px solid rgba(227,184,102,.35)}
+.pill.prev{background:rgba(255,255,255,.04);color:var(--sub);border:1px solid var(--line);font-weight:600}
+.scrollhint{margin-top:34px;color:var(--dim);font-size:12px;display:flex;align-items:center;gap:8px}
+.scrollhint span{display:inline-block;width:18px;height:28px;border:1.5px solid var(--dim);border-radius:10px;position:relative}
+.scrollhint span::after{content:"";position:absolute;left:50%;top:6px;width:2px;height:6px;margin-left:-1px;background:var(--dim);border-radius:2px;animation:sh 1.6s infinite}
+@keyframes sh{0%{transform:translateY(0);opacity:1}100%{transform:translateY(9px);opacity:0}}
+
+/* 3D bars */
+.stage{margin-top:36px;height:400px;perspective:1100px;display:flex;align-items:flex-end;justify-content:center;cursor:grab;touch-action:pan-y;user-select:none;position:relative}
+.stage:active{cursor:grabbing}
+.scene{position:relative;transform-style:preserve-3d;transform:rotateX(-14deg) rotateY(-28deg);transition:transform .08s linear;display:flex;gap:90px;align-items:flex-end;height:340px}
+.floor{position:absolute;left:-90px;right:-90px;bottom:-1px;height:260px;transform:rotateX(90deg);transform-origin:bottom;
+  background:radial-gradient(closest-side,rgba(61,139,253,.22),transparent),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 40px),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 40px)}
+.bar{--w:96px;--h:0px;position:relative;width:var(--w);height:340px;transform-style:preserve-3d}
+.cube{position:absolute;bottom:0;left:0;width:var(--w);height:var(--h);transform-style:preserve-3d;transition:height 1.6s cubic-bezier(.2,.8,.2,1)}
+.cube>i{position:absolute;display:block}
+.f{inset:0;transform:translateZ(calc(var(--w)/2))}
+.b{inset:0;transform:rotateY(180deg) translateZ(calc(var(--w)/2))}
+.l{top:0;bottom:0;width:var(--w);transform:rotateY(-90deg) translateZ(calc(var(--w)/2))}
+.r{top:0;bottom:0;width:var(--w);transform:rotateY(90deg) translateZ(calc(var(--w)/2))}
+.t{left:0;width:var(--w);height:var(--w);top:0;transform:rotateX(90deg) translateZ(calc(var(--w)/2));transform-origin:center}
+.bar.prev .f{background:linear-gradient(180deg,#3a4560,#232b3e)}
+.bar.prev .r{background:linear-gradient(180deg,#2a3348,#181e2d)}
+.bar.prev .l,.bar.prev .b{background:#1d2436}
+.bar.prev .t{background:#4a5677}
+.bar.cur .f{background:linear-gradient(180deg,#f1d18f,#c79a4b 60%,#8f6a2c)}
+.bar.cur .r{background:linear-gradient(180deg,#c99d4e,#7d5c25)}
+.bar.cur .l,.bar.cur .b{background:#8a6630}
+.bar.cur .t{background:#f6deaa;box-shadow:0 0 60px 10px rgba(227,184,102,.35)}
+.tag{position:absolute;left:50%;bottom:calc(var(--h) + 28px);transform:translateX(-50%) translateZ(calc(var(--w)/2));white-space:nowrap;text-align:center;transition:bottom 1.6s cubic-bezier(.2,.8,.2,1)}
+.tag b{display:block;font-size:22px;font-weight:900}
+.tag em{font-style:normal;font-size:12px;color:var(--sub)}
+.bar.cur .tag b{color:var(--gold)}
+.year{position:absolute;bottom:-34px;left:50%;transform:translateX(-50%) translateZ(calc(var(--w)/2));font-weight:800;color:var(--sub);font-family:'Inter';font-size:14px}
+.hint{text-align:center;color:var(--dim);font-size:12px;margin-top:48px}
+
+/* line chart */
+.panel{margin-top:30px;padding:22px 18px 16px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.7)}
+.legend{display:flex;gap:18px;font-size:13px;color:var(--sub);margin:0 4px 10px}
+.legend i{display:inline-block;width:18px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}
+svg text{font-family:'Inter',sans-serif}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset 2.2s cubic-bezier(.4,.1,.2,1)}
+.in .draw{stroke-dashoffset:0}
+.area{opacity:0;transition:opacity 1.2s 1.2s}
+.in .area{opacity:1}
+
+/* categories */
+.cats{margin-top:30px;display:grid;gap:14px}
+.cat{padding:20px 20px 18px;border-radius:20px;background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden;
+  transform:translateY(30px) rotateX(12deg);opacity:0;transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s;transform-origin:top}
+.in .cat{transform:none;opacity:1}
+.cat .hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.cat .nm{font-weight:700;font-size:16px}
+.cat .gr{font-weight:900;color:var(--gold);font-size:20px}
+.track{margin-top:14px;display:grid;gap:7px}
+.tr{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--dim)}
+.tr span{width:36px;font-family:'Inter';font-weight:700}
+.tr div{flex:1;height:12px;border-radius:6px;background:rgba(255,255,255,.04);overflow:hidden}
+.tr div i{display:block;height:100%;width:0;border-radius:6px;transition:width 1.4s cubic-bezier(.2,.8,.2,1) .3s}
+.tr.p i{background:linear-gradient(90deg,#2b3550,#4a5677)}
+.tr.c i{background:linear-gradient(90deg,#9c7330,#f1d18f);box-shadow:0 0 18px rgba(227,184,102,.35)}
+.tr b{width:70px;text-align:right;color:var(--text);font-family:'Inter';font-weight:700}
+
+/* structure */
+.flow{margin-top:30px;display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px}
+.node{padding:18px 12px;border-radius:18px;text-align:center;background:var(--card);border:1px solid var(--line)}
+.node b{display:block;font-size:15px}
+.node em{display:block;font-style:normal;font-size:12px;color:var(--sub);margin-top:4px;line-height:1.5}
+.node.mid{border-color:rgba(61,139,253,.5);box-shadow:0 0 40px -10px rgba(61,139,253,.6)}
+.arrow{color:var(--gold);font-size:20px}
+@media(max-width:560px){.flow{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}}
+
+/* about */
+.stats{margin-top:30px;display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}}
+.st{padding:24px 18px;border-radius:20px;background:var(--card);border:1px solid var(--line);text-align:left}
+.st b{display:block;font-size:clamp(32px,4.4vw,46px);font-weight:900;line-height:1;color:var(--gold)}
+.st em{display:block;font-style:normal;color:var(--sub);font-size:13px;margin-top:10px}
+.fields{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+.fields span{padding:8px 14px;border-radius:99px;border:1px solid var(--line);background:var(--card);font-size:13px;font-weight:600}
+.note{margin-top:18px;color:var(--dim);font-size:13px}
+
+/* plan */
+.plan{margin-top:30px;display:grid;gap:16px}
+@media(min-width:900px){.plan{grid-template-columns:1fr 1fr}}
+.pc{padding:24px 22px;border-radius:20px;background:linear-gradient(160deg,#18203a,#121828);border:1px solid var(--line);position:relative;overflow:hidden;
+  opacity:0;transform:perspective(900px) rotateX(18deg) translateY(30px);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
+.in .pc{opacity:1;transform:none}
+.pc .no{font-family:'Inter';font-weight:900;font-size:44px;line-height:1;color:transparent;-webkit-text-stroke:1px rgba(227,184,102,.55);position:absolute;right:18px;top:16px}
+.pc h3{margin:0 60px 8px 0;font-size:19px;font-weight:800}
+.pc p{margin:0;color:var(--sub);font-size:14px;line-height:1.7}
+.pc ul{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:6px}
+.pc li{font-size:13px;color:var(--text);padding-left:16px;position:relative;line-height:1.55}
+.pc li::before{content:"";position:absolute;left:0;top:8px;width:6px;height:6px;border-radius:2px;background:var(--gold)}
+.qline{margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.q{padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.02);font-size:12px;color:var(--sub);line-height:1.5}
+.q b{display:block;color:var(--gold);font-family:'Inter';font-size:13px;margin-bottom:4px}
+@media(max-width:560px){.qline{grid-template-columns:1fr 1fr}}
+
+/* closing */
+.close{text-align:center;padding:90px 0 110px}
+.close h2{font-size:clamp(28px,6vw,46px)}
+.goal{display:inline-flex;gap:24px;margin-top:28px;padding:22px 28px;border-radius:22px;border:1px solid rgba(227,184,102,.35);background:rgba(227,184,102,.06);flex-wrap:wrap;justify-content:center}
+.goal div{text-align:center}
+.goal em{display:block;font-style:normal;color:var(--sub);font-size:12px}
+.goal b{display:block;font-size:28px;font-weight:900;color:var(--gold);margin-top:4px}
+footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--dim);font-size:12px;text-align:center;line-height:1.8}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .9s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ===== 3D DEPTH FX ===== */
+:root{--edge:rgba(0,0,0,.28);--ext:rgba(0,0,0,.22)}
+.shapes{position:fixed;inset:0;pointer-events:none;z-index:0;perspective:900px;overflow:hidden}
+.shp{position:absolute;transform-style:preserve-3d;will-change:transform}
+.shp .cb{position:absolute;inset:0;transform-style:preserve-3d;animation:spin 26s linear infinite}
+.shp .cb i{position:absolute;inset:0;border:1.5px solid var(--gold);opacity:.22;border-radius:6px;background:linear-gradient(135deg,rgba(255,255,255,.06),transparent)}
+.shp .cb i:nth-child(1){transform:translateZ(var(--hz))}.shp .cb i:nth-child(2){transform:rotateY(180deg) translateZ(var(--hz))}
+.shp .cb i:nth-child(3){transform:rotateY(90deg) translateZ(var(--hz))}.shp .cb i:nth-child(4){transform:rotateY(-90deg) translateZ(var(--hz))}
+.shp .cb i:nth-child(5){transform:rotateX(90deg) translateZ(var(--hz))}.shp .cb i:nth-child(6){transform:rotateX(-90deg) translateZ(var(--hz))}
+.shp.ring .cb{border:2px solid var(--gold);border-radius:50%;opacity:.2;animation-duration:34s}
+.shp.ring .cb::after{content:"";position:absolute;inset:18%;border:1.5px dashed var(--gold);border-radius:50%}
+@keyframes spin{from{transform:rotateX(0) rotateY(0) rotateZ(0)}to{transform:rotateX(360deg) rotateY(720deg) rotateZ(180deg)}}
+.counter,.cat,.pc,.node,.panel,.q,.goal{box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),0 3px 0 var(--edge),0 4px 0 var(--edge),0 6px 0 var(--edge),var(--dropx,0px) var(--dropy,34px) 60px -24px rgba(0,0,0,.45)!important}
+.tilt{position:relative;will-change:transform}
+.glare{position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.28),transparent 55%);mix-blend-mode:soft-light;z-index:3}
+.tilt.hov .glare{opacity:1}
+.counter .big,.goal b,.cat .gr,.tag b{text-shadow:0 1px 0 var(--ext),0 2px 0 var(--ext),0 3px 0 var(--ext),0 4px 0 var(--ext),0 8px 14px rgba(0,0,0,.25)}
+.tr div{height:16px;border-radius:8px;box-shadow:inset 0 2px 4px rgba(0,0,0,.18)}
+.tr div i{border-radius:8px;box-shadow:inset 0 2px 1px rgba(255,255,255,.45),inset 0 -3px 4px rgba(0,0,0,.22)!important}
+.sec3d{transform-origin:50% 50%;will-change:transform,opacity}
+@media (prefers-reduced-motion:reduce){.shp .cb{animation:none}}
+
+/* ===== LIGHT THEME ===== */
+:root{--bg:#f5f7fb;--bg2:#ffffff;--card:#ffffff;--line:rgba(16,36,72,.09);--text:#0f1b2d;--sub:#56637a;--dim:#8792a6;--gold:#1e6bb0;--blue:#1e6bb0;--gold2:#164a7e}
+.bgglow{background:radial-gradient(55% 40% at 10% 0%,rgba(30,107,176,.12),transparent 70%),radial-gradient(45% 35% at 100% 25%,rgba(8,169,230,.10),transparent 70%),radial-gradient(70% 40% at 50% 110%,rgba(30,107,176,.08),transparent 70%)}
+.grid{opacity:.6}
+.top{background:rgba(255,255,255,.78)}
+.seg{background:#eef2f8}
+.seg a.on{background:#fff;color:var(--text);box-shadow:0 2px 8px rgba(16,36,72,.12)}
+.eyebrow{color:#1e6bb0}
+.hero h1 .g{background:linear-gradient(90deg,#164a7e,#1e6bb0 45%,#08a9e6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.counter{background:#fff;border-color:rgba(16,36,72,.08);box-shadow:0 40px 80px -30px rgba(16,50,100,.28),0 2px 6px rgba(16,36,72,.05)}
+.counter::before{background:linear-gradient(130deg,rgba(30,107,176,.7),transparent 40%,transparent 60%,rgba(8,169,230,.6))}
+.pill.up{background:rgba(30,107,176,.1);color:#1e6bb0;border-color:rgba(30,107,176,.3)}
+.pill.prev{background:#f2f5f9}
+.sample{border-color:rgba(30,107,176,.5);color:#1e6bb0}
+.st,.cat,.panel,.node,.fields span{box-shadow:0 18px 40px -24px rgba(16,50,100,.25)}
+.panel{background:#fff}
+.floor{background:radial-gradient(closest-side,rgba(30,107,176,.16),transparent),repeating-linear-gradient(90deg,rgba(16,36,72,.06) 0 1px,transparent 1px 40px),repeating-linear-gradient(0deg,rgba(16,36,72,.06) 0 1px,transparent 1px 40px)}
+.bar.prev .f{background:linear-gradient(180deg,#dfe5ee,#c7d0dd)}
+.bar.prev .r{background:linear-gradient(180deg,#c3ccda,#aeb9c9)}
+.bar.prev .l,.bar.prev .b{background:#b8c2d1}
+.bar.prev .t{background:#eef2f7}
+.bar.cur .f{background:linear-gradient(180deg,#3b9ae8,#1e6bb0 60%,#164a7e)}
+.bar.cur .r{background:linear-gradient(180deg,#1e6bb0,#123d68)}
+.bar.cur .l,.bar.cur .b{background:#164a7e}
+.bar.cur .t{background:#6fbaf2;box-shadow:0 0 60px 10px rgba(30,107,176,.25)}
+.tr div{background:#eef2f7}
+.tr.p i{background:linear-gradient(90deg,#c7d0dd,#aeb9c9)}
+.tr.c i{background:linear-gradient(90deg,#1e6bb0,#3b9ae8);box-shadow:0 0 14px rgba(30,107,176,.3)}
+.node.mid{border-color:rgba(30,107,176,.45);box-shadow:0 0 0 4px rgba(30,107,176,.07),0 18px 40px -20px rgba(30,107,176,.45)}
+.pc{background:#fff;box-shadow:0 18px 40px -24px rgba(16,50,100,.25)}
+.pc .no{-webkit-text-stroke:1px rgba(30,107,176,.45)}
+.pc li::before{background:#1e6bb0}
+.q{background:#fff}
+.goal{border-color:rgba(30,107,176,.3);background:rgba(30,107,176,.05)}
+.scrollhint span{border-color:var(--dim)}
+
+/* ===== LIGHT BLUE THEME ===== */
+:root{--bg:#dcebf8;--card:#f4f9fe;--line:rgba(22,74,126,.13);--text:#0e2340;--sub:#3f5a7c;--dim:#6f88a6;--gold:#1662a8;--blue:#1662a8}
+body{background:linear-gradient(180deg,#e4f0fb 0%,#d3e6f7 50%,#c9e0f4 100%) fixed}
+.bgglow{background:radial-gradient(55% 40% at 10% 0%,rgba(255,255,255,.75),transparent 70%),radial-gradient(45% 35% at 100% 30%,rgba(91,195,236,.28),transparent 70%),radial-gradient(70% 40% at 50% 110%,rgba(30,107,176,.16),transparent 70%)}
+.top{background:rgba(228,240,251,.8)}
+.seg{background:#c9def2}
+.counter{background:linear-gradient(160deg,#ffffff,#eef6fd)}
+.st,.cat,.node,.fields span,.q,.pc,.panel{background:#f4f9fe}
+.st,.cat,.panel,.node,.pc{box-shadow:0 20px 44px -24px rgba(22,74,126,.35)}
+.tr div{background:#dbe8f5}
+.bar.prev .f{background:linear-gradient(180deg,#b7cde3,#9db6d0)}
+.bar.prev .r{background:linear-gradient(180deg,#9cb4ce,#839db9)}
+.bar.prev .l,.bar.prev .b{background:#8fa8c3}
+.bar.prev .t{background:#d3e2f1}
+.tr.p i{background:linear-gradient(90deg,#a9c0d8,#8fa8c3)}
+.goal{background:rgba(255,255,255,.5)}
+:root{--edge:rgba(22,74,126,.14);--ext:rgba(22,74,126,.15)}
+
+/* soften shadows on page 1-2 */
+.hero .counter,#s-bars .goal{box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),var(--dropx,0px) calc(var(--dropy,34px)*.5) 36px -22px rgba(0,0,0,.28)!important}
+.hero .counter .big,#s-bars .goal b,#s-bars .tag b{text-shadow:0 1px 0 var(--ext),0 2px 0 var(--ext),0 4px 8px rgba(0,0,0,.12)!important}
+#s-bars .bar.cur .t{box-shadow:0 0 30px 4px rgba(127,160,200,.18)!important}
+/* ===== SIDEBAR PAGING (springs from designbookmark sidebar-collapse) ===== */
+html,body{height:100%;overflow:hidden}
+html{scroll-snap-type:none}
+.sec3d{transform:none!important;opacity:1!important}
+.shp{transition:transform 1.4s cubic-bezier(.2,.8,.2,1)}
+main{position:fixed;top:60px;left:0;right:0;bottom:0;touch-action:pan-y}
+main>section{position:absolute;top:0;right:0;bottom:0;left:var(--sbw,240px);display:none!important;min-height:0!important;overflow-y:auto;overflow-x:hidden;padding:28px 0 96px!important;-webkit-overflow-scrolling:touch}
+main>section.cur,main>section.leave{display:flex!important;align-items:center}
+main>section.enter{animation:pgIn .62s cubic-bezier(.2,.8,.2,1)}
+main>section.leave{animation:pgOut .34s ease-in forwards;pointer-events:none}
+@keyframes pgIn{from{opacity:0;transform:perspective(1600px) translateX(var(--dx,70px)) rotateY(var(--ry,-9deg))}to{opacity:1;transform:none}}
+@keyframes pgOut{to{opacity:0;transform:perspective(1600px) translateX(var(--dxo,-70px)) rotateY(var(--ryo,9deg))}}
+main>section .wrap{margin:auto}
+main>footer{display:none}
+#s-close footer{border-top:1px solid var(--line);margin-top:44px;padding:22px 0 0}
+.side{position:fixed;left:14px;top:74px;z-index:30;width:212px;padding:10px;border-radius:24px;background:var(--card);overflow:hidden;border:1px solid var(--line);box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),0 24px 50px -26px rgba(22,74,126,.45)}
+.side .top{position:relative;display:flex;align-items:center;height:44px;padding:0 6px;margin-bottom:6px}
+.side .logo{width:28px;height:28px;border-radius:9px;flex:none;background:linear-gradient(135deg,#3b9ae8,#164a7e);display:grid;place-items:center;color:#fff;font:800 10px/1 'Inter',sans-serif;letter-spacing:.02em}
+.side .brand{margin-left:10px;font-size:15px;font-weight:800;color:var(--text)}
+.side .col{position:absolute;right:0;top:4px;width:36px;height:36px;border:0;border-radius:12px;background:rgba(22,98,168,.09);color:var(--text);cursor:pointer;display:grid;place-items:center}
+.side .col svg{width:18px;height:18px;will-change:transform}
+.side svg,.pager svg{fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.side .list{position:relative;display:flex;flex-direction:column;gap:2px}
+.side .it{position:relative;z-index:1;display:flex;align-items:center;height:44px;padding:0 11px;border:0;border-radius:14px;background:none;color:var(--sub);cursor:pointer;font:inherit;font-size:14px;font-weight:600;white-space:nowrap;transition:color .25s;text-align:left;-webkit-tap-highlight-color:transparent}
+.side .it.on{color:var(--gold)}
+.side .it svg{width:22px;height:22px;flex:none}
+.side .it .lb{margin-left:12px}
+.side .lb{display:inline-block;white-space:nowrap;will-change:transform,opacity}
+.side .hl{position:absolute;left:0;right:0;top:0;height:44px;border-radius:14px;background:rgba(22,98,168,.11);will-change:transform}
+.pager{position:fixed;right:18px;bottom:16px;z-index:30;display:flex;align-items:center;gap:6px;padding:6px;border-radius:99px;background:var(--card);border:1px solid var(--line);box-shadow:0 18px 40px -22px rgba(22,74,126,.45)}
+.pager button{appearance:none;border:0;width:44px;height:44px;border-radius:99px;background:rgba(22,98,168,.09);color:var(--text);display:grid;place-items:center;cursor:pointer}
+.pager button:disabled{opacity:.35;cursor:default}
+.pager button svg{width:20px;height:20px}
+.pager .pc-n{min-width:64px;text-align:center;font:700 13px 'Inter',sans-serif;color:var(--sub);font-variant-numeric:tabular-nums}
+.pager .pc-n b{color:var(--gold)}
+.scrollhint{display:none}
+
+/* D-SUB background shapes */
+.shp.dsub{color:var(--gold)}
+.shp.dsub .cb{animation:dsubSpin var(--dur,36s) ease-in-out infinite alternate;transform-style:preserve-3d}
+.shp.dsub .ly{position:absolute;inset:0;transform-style:preserve-3d}
+.shp.dsub svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linejoin:round;opacity:.28;overflow:visible}
+.shp.dsub .ly:first-child svg{opacity:.42}
+.shp.dsub .ly:first-child svg circle[r="3.4"]{fill:currentColor;fill-opacity:.35}
+@keyframes dsubSpin{0%{transform:rotateX(18deg) rotateY(-40deg) rotateZ(var(--tilt))}50%{transform:rotateX(-12deg) rotateY(25deg) rotateZ(calc(var(--tilt) * -.5))}100%{transform:rotateX(10deg) rotateY(60deg) rotateZ(var(--tilt))}}
+@media (prefers-reduced-motion:reduce){.shp.dsub .cb{animation:none;transform:rotateX(14deg) rotateY(-24deg)}}
+/* ===== STEP PROGRESS (springs from designbookmark step-progress) ===== */
+.qsteps{margin-top:18px;padding:18px 22px 16px;border-radius:20px;background:var(--card);border:1px solid var(--line);box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),0 3px 0 var(--edge),0 20px 44px -24px rgba(22,74,126,.35)}
+.qsteps .hd{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.qsteps .ttl{font-size:15px;font-weight:800;color:var(--text)}
+.qsteps .ttl em{font-style:normal;font-family:'Inter';font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--gold);margin-right:10px}
+.qsteps .act{display:flex;gap:8px}
+.qsteps .act button{height:40px;min-width:44px;padding:0 16px;border:0;border-radius:14px;background:rgba(22,98,168,.09);color:var(--text);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.qsteps .act .next{background:#0e2340;color:#fff}
+.qsteps .act button:disabled{opacity:.35;cursor:default}
+.qsteps .trk{position:relative;height:40px;margin:0 70px}
+.qsteps .trk::before{content:"";position:absolute;left:0;right:0;top:18px;height:4px;border-radius:2px;background:rgba(22,98,168,.15)}
+.qsteps .qbar{position:absolute;left:0;top:18px;height:4px;border-radius:2px;background:var(--gold);will-change:width}
+.qsteps .dots{position:absolute;inset:0}
+.qsteps .dot{position:absolute;top:0;width:40px;height:40px;margin-left:-20px;border-radius:50%;background:#fff;color:var(--sub);border:1px solid var(--line);display:grid;place-items:center;font:800 13px 'Inter',sans-serif;will-change:transform;cursor:pointer;padding:0;appearance:none}
+.qsteps .dot b{position:absolute;font-weight:inherit}
+.qsteps .dot svg{position:absolute;width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round}
+.qsteps .names{position:relative;height:44px;margin:10px 70px 0}
+.qsteps .names span{position:absolute;top:0;transform:translateX(-50%);font-size:13px;line-height:1.5;color:var(--dim);white-space:nowrap;text-align:center;transition:color .3s,font-weight .3s}
+.qsteps .names span.on{color:var(--text)}
+.qsteps .names span.cur{color:var(--gold);font-weight:700}
+
+#s-plan .plan{margin-top:20px;gap:12px}
+#s-plan .pc{padding:18px 20px}
+#s-plan h2{margin-bottom:4px}
+
+#s-plan{padding:14px 0 66px!important}
+#s-plan h2{font-size:40px!important;margin:6px 0 2px}
+#s-plan .pc ul{margin-top:8px;gap:4px}
+#s-plan .pc p{line-height:1.6}
+
+/* ===== real numbers: stacked bar, notes, multiples ===== */
+.fx-note{margin-top:14px;font-size:12px;color:var(--dim);line-height:1.6}
+.pill.pend{background:repeating-linear-gradient(135deg,rgba(22,98,168,.10) 0 6px,rgba(22,98,168,.04) 6px 12px);color:var(--gold);border:1px dashed rgba(22,98,168,.45)}
+.pill.pend:empty{display:none}
+.bar .cube.pend{bottom:var(--hb,0px)}
+.bar.cur .cube.pend .f{background:repeating-linear-gradient(135deg,rgba(91,170,235,.55) 0 8px,rgba(91,170,235,.32) 8px 16px);outline:2px dashed rgba(22,98,168,.6);outline-offset:-2px}
+.bar.cur .cube.pend .r{background:rgba(70,145,215,.45)}
+.bar.cur .cube.pend .l,.bar.cur .cube.pend .b{background:rgba(70,145,215,.3)}
+.bar.cur .cube.pend .t{background:rgba(160,205,245,.75);box-shadow:none}
+#s-bars .cube.pend{transition:height 1.6s cubic-bezier(.2,.8,.2,1) .5s,bottom 1.6s cubic-bezier(.2,.8,.2,1)}
+.tag em{display:block;margin-top:2px}
+#yoyBox{display:flex;gap:26px;flex-wrap:wrap}
+#yoyBox>div{text-align:left}
+#yoyBox small,.cat .gr small{display:block;font-size:12px;font-weight:700;color:var(--sub);margin-top:2px;text-shadow:none}
+#yoyBox .x{font-size:15px;color:var(--gold);font-weight:900;margin-top:4px;display:block}
+.legend i.dash{background:none!important;border-top:3px dashed var(--gold);height:0}
+.cat .gr{text-align:right;line-height:1.1}
+.cat .gr.nw{font-size:16px;padding:4px 10px;border-radius:99px;background:rgba(22,98,168,.1);text-shadow:none}
+.cat.wide{grid-column:1/-1}
+.cat.mcon .hd{align-items:center}
+.cat.mcon p{margin:8px 0 0;color:var(--sub);font-size:14px;line-height:1.6}
+.cat.mcon .badge2{font-size:12px;font-weight:800;color:#fff;background:linear-gradient(135deg,#3b9ae8,#164a7e);padding:6px 12px;border-radius:99px;white-space:nowrap}
+#s-cats .cats{gap:12px}
+#s-cats .cat{padding:16px 18px 14px}
+#s-cats .track{margin-top:10px}
+
+/* ===== key customers ===== */
+.custs{margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
+@media(max-width:860px){.custs{grid-template-columns:1fr}}
+.cu{position:relative;padding:20px 20px 18px;border-radius:20px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column;
+  box-shadow:0 1px 0 var(--edge),0 2px 0 var(--edge),0 3px 0 var(--edge),0 4px 0 var(--edge),0 22px 44px -24px rgba(22,74,126,.38);
+  opacity:0;transform:perspective(900px) rotateX(16deg) translateY(26px);transition:transform .9s cubic-bezier(.2,.8,.2,1),opacity .9s}
+.in .cu{opacity:1;transform:none}
+.cu-hd{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mono{min-width:44px;height:44px;padding:0 8px;border-radius:14px;display:grid;place-items:center;font:900 15px 'Inter',sans-serif;color:#fff;background:linear-gradient(135deg,#3b9ae8,#164a7e);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -6px rgba(22,74,126,.6)}
+.cu-badge{font-size:12px;font-weight:800;padding:6px 11px;border-radius:99px;white-space:nowrap}
+.cu-badge.ok{background:rgba(22,98,168,.1);color:var(--gold)}
+.cu-badge.wip{background:repeating-linear-gradient(135deg,rgba(22,98,168,.1) 0 6px,rgba(22,98,168,.04) 6px 12px);color:var(--gold);border:1px dashed rgba(22,98,168,.45)}
+.cu h3{margin:14px 0 4px;font-size:18px;font-weight:800;line-height:1.3}
+.cu-desc{margin:0;color:var(--sub);font-size:12.5px;line-height:1.55;min-height:39px}
+.stg{position:relative;height:46px;margin:18px 14px 6px}
+.stg-ln{position:absolute;left:0;right:0;top:7px;height:4px;border-radius:2px;background:rgba(22,98,168,.14)}
+.stg-ln i{display:block;height:100%;width:0;border-radius:2px;background:var(--gold);transition:width 1.4s cubic-bezier(.2,.8,.2,1) .5s}
+.in .stg-ln i{width:var(--fill)}
+.stg-d{position:absolute;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px}
+.stg-d b{width:18px;height:18px;border-radius:50%;background:#fff;border:2px solid rgba(22,98,168,.25);transition:background .4s .9s,border-color .4s .9s}
+.in .stg-d.on b{background:var(--gold);border-color:var(--gold)}
+.in .stg-d.now b{border-color:var(--gold);box-shadow:0 0 0 0 rgba(22,98,168,.45);animation:pulse 1.8s ease-out 1.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(22,98,168,.45)}100%{box-shadow:0 0 0 10px rgba(22,98,168,0)}}
+.stg-d em{font-style:normal;font-size:11px;font-weight:700;color:var(--dim);white-space:nowrap}
+.stg-d.on em,.stg-d.now em{color:var(--text)}
+.cu-txt{margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--text)}
+.cu-kpi{margin-top:auto;padding-top:14px}
+.cu-kpi b{display:block;margin-top:10px;padding:12px 14px 4px;border-radius:14px 14px 0 0;background:linear-gradient(135deg,rgba(59,154,232,.14),rgba(22,74,126,.08));font-size:26px;font-weight:900;color:var(--gold);text-shadow:0 1px 0 var(--ext),0 2px 0 var(--ext)}
+.cu-kpi span{display:block;padding:2px 14px 12px;border-radius:0 0 14px 14px;background:linear-gradient(135deg,rgba(59,154,232,.14),rgba(22,74,126,.08));font-size:12px;color:var(--sub);line-height:1.5}
+</style>
+</head>
+<body>
+<div class="bgglow"></div><div class="grid"></div>
+
+<header class="top"><div class="wrap">
+  <div class="brand">EDS <span class="x">×</span> <span id="pname">XKT</span></div>
+  <nav class="seg" aria-label="合作伙伴">
+    <a href="#xkt" id="t-xkt">兴开泰</a><a href="#hxw" id="t-hxw">鸿祥威</a>
+  </nav>
+  <nav class="seg" aria-label="Language"><a href="#" id="l-zh">中文</a><a href="#" id="l-ko">한국어</a></nav>
+</div></header>
+
+<aside class="side" id="side" aria-label="Pages">
+  <div class="top"><span class="logo">EDS</span><span class="lb brand" id="sbBrand">2026 报告</span>
+    <button class="col" id="col" type="button" aria-label="Collapse sidebar" aria-expanded="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg></button></div>
+  <nav class="list" id="sbList"><span class="hl" id="hl"></span>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20v-8M12 20V5M18 20v-5M3.5 20h17"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 16.5 9 11l4 3 7-8M4 20h16"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20.5V6.5l7-3v17M11 9.5l9 3v8M2.5 20.5h19M7 9v.01M7 12.5v.01M7 16v.01M15 15v.01M15 18v.01"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="2.3"/><circle cx="18.5" cy="6" r="2.3"/><circle cx="18.5" cy="18" r="2.3"/><path d="M7.7 11l8.6-4M7.7 13l8.6 4"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5.5" width="16" height="14.5" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg><span class="lb"></span></button>
+    <button class="it" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 21V4M5.5 4.5h11l-2.2 4 2.2 4h-11"/></svg><span class="lb"></span></button>
+  </nav>
+</aside>
+<div class="pager" id="pager">
+  <button type="button" id="pgPrev" aria-label="Previous page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6.5 9 12l5.5 5.5"/></svg></button>
+  <span class="pc-n" id="pgN"><b>01</b> / 08</span>
+  <button type="button" id="pgNext" aria-label="Next page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6.5 15 12l-5.5 5.5"/></svg></button>
+</div>
+<main>
+  <!-- HERO -->
+  <section class="hero" id="s-hero"><div class="wrap split">
+    <div>
+    <div class="eyebrow reveal">2026 Partnership Report <span class="sample"><span data-t="smp">示例数据</span></span></div>
+    <h1 class="reveal" data-t="h1">携手同行，<br><span class="g">共创增长</span></h1>
+    <p class="lead reveal" id="heroLead"></p>
+    <div class="scrollhint"><span></span><span data-t="hint1">向下滑动查看详情</span></div>
+    </div>
+    <div class="counter reveal" id="tilt">
+      <div class="lbl"><span><span data-t="lbl1">2026年 合作交易额（已入库）</span></span><span class="num">CNY</span></div>
+      <div class="big num"><span id="cnt">0</span><small data-t="wan">万元</small></div>
+      <div class="row">
+        <span class="pill up num" id="pct">▲ +0%</span>
+        <span class="pill prev num" id="prevTxt"></span>
+        <span class="pill pend num" id="pendTxt"></span>
+      </div>
+      <div class="fx-note" id="note1"></div>
+    </div>
+  </div></section>
+
+  <!-- 3D BARS -->
+  <section id="s-bars"><div class="wrap split">
+    <div>
+    <div class="eyebrow reveal">01 · Year over Year</div>
+    <h2 class="reveal"><span data-t="yoy">年度对比</span></h2>
+    <p class="lead reveal"><span data-t="yoyl">2025年 vs 2026年 合作交易额</span></p>
+    <div class="goal reveal" id="yoyBox" style="margin-top:28px"></div>
+    <div class="fx-note" id="note2"></div>
+    </div>
+    <div>
+    <div class="stage" id="stage">
+      <div class="scene" id="scene">
+        <div class="floor"></div>
+        <div class="bar prev" id="b1"><div class="cube"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i></div><div class="tag"><b class="num" id="b1v"></b><em data-t="wan">万元</em></div><div class="year">2025</div></div>
+        <div class="bar cur" id="b2"><div class="cube pend"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i></div><div class="cube"><i class="f"></i><i class="b"></i><i class="l"></i><i class="r"></i><i class="t"></i></div><div class="tag"><b class="num" id="b2v"></b><em id="b2sub">万元</em></div><div class="year">2026</div></div>
+      </div>
+    </div>
+    <div class="hint"><span data-t="drag">← 左右拖动可旋转 →</span></div>
+    </div>
+  </div></section>
+
+  <!-- LINE -->
+  <section id="s-line"><div class="wrap">
+    <div class="eyebrow reveal">02 · Monthly Trend</div>
+    <h2 class="reveal"><span data-t="mon">累计交易额走势</span></h2>
+    <p class="lead reveal"><span data-t="monl">每个月都在超越去年同期</span></p>
+    <div class="panel reveal">
+      <div class="legend" id="legend"></div>
+      <svg id="chart" viewBox="0 0 800 340" width="100%" role="img" aria-label="月度销售额走势"></svg>
+    </div>
+  </div></section>
+
+  <!-- CATEGORIES -->
+  <section id="s-cats"><div class="wrap">
+    <div class="eyebrow reveal">03 · By Product</div>
+    <h2 class="reveal"><span data-t="cat">各品类增长</span></h2>
+    <p class="lead reveal"><span data-t="catl">韩国市场对贵司产品的需求全面提升</span></p>
+    <div class="cats" id="cats"></div>
+  </div></section>
+
+  <!-- KEY CUSTOMERS -->
+  <section id="s-cust"><div class="wrap">
+    <div class="eyebrow reveal">04 · Key Customers</div>
+    <h2 class="reveal"><span data-t="cust">主要客户开发成果</span></h2>
+    <p class="lead reveal" id="custLead"></p>
+    <div class="custs" id="custs"></div>
+  </div></section>
+
+  <!-- STRUCTURE -->
+  <section id="s-flow"><div class="wrap">
+    <div class="eyebrow reveal">05 · How We Work</div>
+    <h2 class="reveal"><span data-t="flow">合作模式</span></h2>
+    <p class="lead reveal" id="flowLead"></p>
+    <div class="flow reveal" id="flow"></div>
+  </div></section>
+
+  <!-- PLAN 2027 -->
+  <section id="s-plan"><div class="wrap">
+    <div class="eyebrow reveal">06 · 2027 Cooperation Plan <span class="sample"><span data-t="draft">草案</span></span></div>
+    <h2 class="reveal"><span data-t="plan">2027年 合作方案</span></h2>
+    <p class="lead reveal" id="planLead"></p>
+    <div class="plan" id="plan"></div>
+    <div id="qline" role="group" aria-label="2027 roadmap"></div>
+  </div></section>
+
+  <!-- CLOSING -->
+  <section class="close" id="s-close"><div class="wrap">
+    <div class="eyebrow reveal">2027 · Next Step</div>
+    <h2 class="reveal" data-t="h2c">2027年，<br>一起走得更远</h2>
+    <p class="lead reveal" style="max-width:520px;margin:0 auto"><span data-t="prop">期待与贵司在2027年继续携手，共同成长。</span></p>
+    <div class="goal reveal">
+      <div><em><span data-t="g1">2027 目标交易额</span></em><b class="num" id="goal1"></b></div>
+      <div><em><span data-t="g2">目标增长率</span></em><b class="num" id="goal2"></b></div>
+    </div>
+    <div class="fx-note" id="goalNote" style="text-align:center"></div>
+  </div></section>
+
+  <footer><div class="wrap" data-t="foot">
+    <b style="color:var(--text)">EDS Co., Ltd.</b> · KIM CHAN JIN 分公司总经理<br>
+    TEL +82-51-816-2991 · edison2991@e-eds.co.kr · www.e-eds.co.kr<br>
+    韩国釜山市水营区望美洞 207-11
+  </div></footer>
+</main>
+
+<script>
+// ===== 示例数据 (样本) — 실제 숫자는 엑셀 받으면 교체 =====
+const DATA = {
+  xkt:{ name:"XKT", cn:"深圳市兴开泰五金有限公司",
+    plan:{zh:{lead:"在现有合作基础上，EDS提出以下四项合作方向，携手扩大韩国市场份额。",
+      items:[["扩大兴开泰产品线","2026年，除原有 EDH 系列外，EDS 经销的兴开泰新品品类大幅增加。",["持续将兴开泰新品引进韩国市场","扩大经销品类，覆盖更多韩国客户需求"]],
+             ["年度预测与稳定供货","共享年度需求预测，提前锁定产能与交期。",["每季度滚动预测 (Rolling Forecast)","重点型号安全库存与交期承诺"]],
+             ["D-SUB 专用产品目录","EDS 正在制作兴开泰 D-SUB 产品专用目录，向韩国客户系统推广。",["D-SUB 全系列规格与图纸一册收录","线上线下同步发放给韩国客户"]],
+             ["扩大 M-CON 端子台销售","以双方共同开发的新品 M-CON 端子台为核心，全面扩大韩国市场销售。",["重点开拓韩国控制柜与设备客户","样品推广与展会联合展示"]]],
+      q:[["Q1","年度预测共享<br>D-SUB 目录发布"],["Q2","M-CON<br>重点客户推广"],["Q3","新品引进<br>展会推广"],["Q4","年度成果复盘<br>2028 规划"]]},
+     ko:{lead:"지금까지의 협력을 바탕으로, EDS는 한국 시장 점유율을 함께 넓히기 위한 네 가지 방향을 제안합니다.",
+      items:[["XKT 취급 품목 확대","2026년, 기존 EDH 시리즈 외에 EDS가 취급하는 XKT 신규 품목 수를 크게 늘렸습니다.",["XKT 신규 품목의 한국 시장 도입 지속","취급 품목을 넓혀 더 많은 한국 고객 수요에 대응"]],
+             ["연간 예측과 안정적 공급","연간 수요 예측을 공유해 생산 능력과 납기를 미리 확보합니다.",["분기별 롤링 포캐스트 공유","주요 품번 안전재고 및 납기 약속"]],
+             ["D-SUB 전용 카탈로그","EDS가 XKT D-SUB 제품 전용 카탈로그를 제작 중이며, 한국 고객사에 체계적으로 알립니다.",["D-SUB 전 라인업 규격·도면을 한 권에 수록","온·오프라인으로 한국 고객사에 배포"]],
+             ["M-CON 단자대 영업 확대","함께 신규 개발한 M-CON 단자대를 중심으로 한국 시장 영업을 본격 확대합니다.",["한국 제어반·장비 고객사 집중 공략","샘플 홍보 및 전시회 공동 전시"]]],
+      q:[["Q1","연간 예측 공유<br>D-SUB 카탈로그 배포"],["Q2","M-CON<br>주요 고객 홍보"],["Q3","신규 품목 도입<br>전시회 홍보"],["Q4","연간 성과 점검<br>2028 계획"]]}},
+    lead:"感谢兴开泰一直以来的信赖与支持。2026年，我们的合作取得了显著成果。",
+    // 实际数据: EDS 向兴开泰采购 (公급가액, 1元=210韩元 换算, 单位: 万元)
+
+    cust:{stages:{zh:["客户开发","SPEC IN","下单","用量扩大"],ko:["영업","SPEC IN","발주","사용량 확대"]},
+      lead:{zh:"EDS 以 EDH 后壳为核心，持续开拓韩国半导体设备龙头企业。",ko:"EDS는 EDH 후드를 중심으로 한국 반도체 장비 대표 기업들을 꾸준히 개척하고 있습니다."},
+      list:[
+       {mono:"S",stage:4,done:true,
+        zh:{name:"三星 SEMES",desc:"韩国最大的半导体·显示器设备制造商<br>（清洗、涂胶显影、刻蚀、OHT 等）",badge:"量产使用中",text:"EDH 后壳已正式导入，使用量持续增长。"},
+        ko:{name:"삼성 SEMES (세메스)",desc:"국내 최대 반도체·디스플레이 장비 제조사<br>(세정·포토트랙·에치·OHT 등)",badge:"양산 적용 중",text:"EDH 후드가 정식 적용되어 사용량이 계속 늘고 있습니다."}},
+       {mono:"R",stage:3,done:true,
+        zh:{name:"RORZE SYSTEMS 罗泽系统",desc:"半导体·显示器自动化设备<br>（洁净机器人、EFEM、晶圆分选机）",badge:"新客户 · 已下单",text:"EDS 新开发客户。SPEC IN 已完成，相关订单已下达。"},
+        ko:{name:"로체시스템즈 (RORZE SYSTEMS)",desc:"반도체·디스플레이 자동화 장비<br>(클린 로봇·EFEM·웨이퍼 소터)",badge:"신규 고객 · 발주 완료",text:"신규 영업 고객사입니다. SPEC IN 작업과 관련 발주까지 완료했습니다."}},
+       {mono:"TEL",stage:2,done:false,
+        zh:{name:"东京电子 TEL · ULVAC 设备",desc:"全球领先的半导体设备制造商",badge:"SPEC IN 推进中",text:"正在推进 SPEC IN，预计 2027年3月前完成。",kpi:"+20,000 EA / 月",kpiL:"完成后 EDH 后壳月用量预计增加<br>（所有针数合计）"},
+        ko:{name:"도쿄일렉트론 · 알박(ULVAC) 장비",desc:"글로벌 반도체 장비 제조사",badge:"SPEC IN 진행 중",text:"SPEC IN 영업 진행 중이며, 2027년 3월까지 완료될 예정입니다.",kpi:"+20,000 EA / 월",kpiL:"완료 시 EDH 후드 월 사용량 증가 예상<br>(모든 핀수 합계)"}}]},
+    real:true, asof:{zh:"按 1元 = 210韩元 换算 · 2026年数据截至11月11日入库",ko:"1위안 = 210원 기준 환산 · 2026년은 11월 11일 입고분까지"},
+    prev:117.965, cur:282.701, pend:95.238, goal:500, goalMin:true,
+    m25:[10.284,0,15.035,15.511,16.862,7.632,11.075,0,13.128,12.971,15.467,0], m26:[40.152,12.016,10.535,13.713,26.866,33.999,35.654,42.279,35.17,32.255,0.062],
+    cats:[["EDH 后壳（含螺丝）",64.081,161.781],["兴开泰 D-SUB（GP系列）",47.105,84.394],["通用 D-SUB 及配件",4.148,12.992],["兴开泰新品（54种）",0,23.533,54]],
+    mcon:{zh:["M-CON 端子台","与兴开泰共同开发的新产品。开发已完成，EDS 正在韩国市场全力推广。","2027年 正式批量订货"],
+          ko:["M-CON 단자대","XKT와 함께 개발한 신제품입니다. 개발을 마치고 EDS가 한국 시장에서 홍보를 진행하고 있습니다.","2027년 본격 발주 예정"]},
+    flowLead:"兴开泰负责精良制造，EDS以自有品牌 EDH 开拓韩国市场。",
+    flow:[["兴开泰","D-SUB·后壳·M-CON<br>开发与生产"],["EDS · EDH","韩国品牌·销售<br>技术支持·通关"],["韩国客户","工厂自动化·机床<br>设备制造商"]],
+    ko:{ lead:"그동안 보내주신 XKT(兴开泰)의 신뢰와 지원에 감사드립니다. 2026년, 우리의 협력은 눈에 띄는 성과를 거두었습니다.",
+      cats:["EDH 후드 (볼트 포함)","XKT D-SUB (GP 시리즈)","범용 D-SUB 및 부속","XKT 신규 품목 (54종)"],
+      flowLead:"XKT는 정밀한 제조를, EDS는 자체 브랜드 EDH로 한국 시장 개척을 맡습니다.",
+      flow:[["XKT (兴开泰)","D-SUB·후드·M-CON<br>개발 및 생산"],["EDS · EDH","한국 브랜드·영업<br>기술 지원·통관"],["한국 고객사","공장자동화·공작기계<br>장비 제조사"]] } },
+  hxw:{ name:"HXW", cn:"深圳市鸿祥威电子有限公司",
+    plan:{zh:{lead:"在现有合作基础上，EDS提出以下四项合作方向，携手开拓韩国伺服与半导体设备市场。",
+      items:[["扩大伺服连接器替代范围","针对韩国主流伺服品牌，扩大可替代的型号范围。",["伺服 I/O · 电机连接器全系列对应","编码器线·动力线组件化供应"]],
+             ["进军半导体设备市场","以高性价比替代日系、美系产品，进入韩国半导体设备供应链。",["圆形 / 航空插头重点推广","设备厂商样品评估与导入"]],
+             ["年度预测与稳定供货","共享年度需求预测，提前锁定产能与交期。",["每季度滚动预测 (Rolling Forecast)","重点型号安全库存与交期承诺"]],
+             ["技术资料与品质保障","完善韩国客户评估所需的技术资料与品质文件。",["英文 / 韩文规格书与对照表","出货检验报告与批次追溯"]]],
+      q:[["Q1","年度预测共享<br>替代型号选定"],["Q2","半导体设备厂<br>样品评估"],["Q3","批量导入<br>扩大供货"],["Q4","年度成果复盘<br>2028 规划"]]},
+     ko:{lead:"지금까지의 협력을 바탕으로, EDS는 한국 서보·반도체 장비 시장을 함께 개척하기 위한 네 가지 방향을 제안합니다.",
+      items:[["서보 커넥터 대체 범위 확대","한국 주요 서보 브랜드를 기준으로 대체 가능한 품번을 넓힙니다.",["서보 I/O·모터 커넥터 전 라인업 대응","엔코더·파워 케이블 어셈블리 공급"]],
+             ["반도체 장비 시장 진출","일본·미국산을 대체하는 가성비로 한국 반도체 장비 공급망에 들어갑니다.",["원형 / 항공 커넥터 집중 홍보","장비 제조사 샘플 평가 및 채택"]],
+             ["연간 예측과 안정적 공급","연간 수요 예측을 공유해 생산 능력과 납기를 미리 확보합니다.",["분기별 롤링 포캐스트 공유","주요 품번 안전재고 및 납기 약속"]],
+             ["기술 자료와 품질 보증","한국 고객사 평가에 필요한 기술 자료와 품질 문서를 갖춥니다.",["영문 / 한글 사양서 및 호환 대조표","출하 검사 성적서 및 로트 추적"]]],
+      q:[["Q1","연간 예측 공유<br>대체 품번 선정"],["Q2","반도체 장비사<br>샘플 평가"],["Q3","양산 채택<br>공급 확대"],["Q4","연간 성과 점검<br>2028 계획"]]}},
+    lead:"感谢鸿祥威一直以来的信赖与支持。2026年，我们的合作取得了显著成果。",
+    prev:180, cur:294, pend:0, goal:400,
+    m25:[12,13,14,14,15,15,16,15,16,16,17,17], m26:[18,19,21,22,23,24,25,26,27,28,29,32],
+    cats:[["伺服 I/O 连接器",70,118],["伺服电机连接器",55,92],["工业 RJ45",30,46],["圆形 / 航空插头",25,38]],
+    flowLead:"鸿祥威负责高精密制造，EDS负责韩国伺服·半导体设备市场的开拓。",
+    flow:[["鸿祥威","伺服·工业连接器<br>高精密制造"],["EDS","韩国销售·技术支持<br>进口通关·交付"],["韩国客户","伺服系统·半导体<br>设备制造商"]],
+    ko:{ lead:"그동안 보내주신 HXW(鸿祥威)의 신뢰와 지원에 감사드립니다. 2026년, 우리의 협력은 눈에 띄는 성과를 거두었습니다.",
+      cats:["서보 I/O 커넥터","서보모터 커넥터","산업용 RJ45","원형 / 항공 커넥터"],
+      flowLead:"HXW는 고정밀 제조를, EDS는 한국 서보·반도체 장비 시장 개척을 맡습니다.",
+      flow:[["HXW (鸿祥威)","서보·산업용 커넥터<br>고정밀 제조"],["EDS","한국 영업·기술 지원<br>수입 통관·납품"],["한국 고객사","서보 시스템·반도체<br>장비 제조사"]] } }
+};
+const KO={hint1:"아래로 넘겨 자세히 보기",lbl1:"2026년 협력 거래액 (입고 기준)",yoy:"연도별 비교",yoyl:"2025년 vs 2026년 협력 거래액",diff:"증가액",rate:"증가율",
+  drag:"← 좌우로 끌어서 회전 →",mon:"누적 거래액 추이",monl:"매달 작년 같은 달을 넘어섰습니다",cat:"품목별 성장",catl:"한국 시장에서 귀사 제품의 수요가 전반적으로 늘었습니다",
+  flow:"협력 구조",prop:"2027년에도 귀사와 함께 손잡고 성장해 나가기를 기대합니다.",draft:"초안",plan:"2027년 협력 방안",g1:"2027 목표 거래액",g2:"목표 증가율",smp:"샘플 데이터",wan:"만 위안",
+  h1:'함께 걸어온 길,<br><span class="g">함께 만든 성장</span>',h2c:"2027년,<br>함께 더 멀리",
+  ab:"EDS는 어떤 회사인가",abl:"1998년부터 한국 커넥터 시장에서 활동하며, 세계의 우수한 제조사와 한국 산업 고객을 이어왔습니다.",
+  st1:"한국 시장 활동 시작",st2:"한국 고객사",st3:"취급 글로벌 브랜드",st4:"핵심 산업 분야",
+  fld:"<span>공장자동화 FA</span><span>공작기계</span><span>생산설비</span><span>로봇 컨트롤러</span><span>칩마운터</span>",
+  abn:"삼성테크윈 · LG전자 등 한국 대기업 협력업체 등록 ｜ 2025년 EDS CHINA 설립",
+  cust:"주요 고객사 영업 성과",
+  foot:'<b style="color:var(--text)">EDS Co., Ltd.</b> · 김찬진 지사장<br>TEL +82-51-816-2991 · edison2991@e-eds.co.kr · www.e-eds.co.kr<br>부산광역시 수영구 망미동 207-11'};
+const ZH={};document.querySelectorAll('[data-t]').forEach(e=>{const k=e.dataset.t;if(!(k in ZH))ZH[k]=e.innerHTML});
+let lang="zh";
+function applyLang(){document.documentElement.lang=lang==='ko'?'ko':'zh-CN';
+  document.querySelectorAll('[data-t]').forEach(e=>{e.innerHTML=(lang==='ko'?KO:ZH)[e.dataset.t]});
+  document.getElementById('l-zh').classList.toggle('on',lang==='zh');document.getElementById('l-ko').classList.toggle('on',lang==='ko');
+  document.getElementById('l-zh').href='#'+key;document.getElementById('l-ko').href='#'+key+'-ko';
+  document.getElementById('t-xkt').href='#xkt'+(lang==='ko'?'-ko':'');document.getElementById('t-hxw').href='#hxw'+(lang==='ko'?'-ko':'');
+  document.getElementById('t-xkt').textContent=lang==='ko'?'XKT':'兴开泰';document.getElementById('t-hxw').textContent=lang==='ko'?'HXW':'鸿祥威';}
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const fmt1=n=>(Math.round(n*10)/10).toLocaleString('en-US',{minimumFractionDigits:1,maximumFractionDigits:1});
+let key="xkt";
+
+function counter(el,to,dur=1800,from=0,dec=0){
+  const s=performance.now();
+  (function f(t){const p=Math.min((t-s)/dur,1),e=1-Math.pow(1-p,4),v=from+(to-from)*e;el.textContent=dec?fmt1(v):fmt(v);if(p<1)requestAnimationFrame(f)})(s);
+}
+
+function render(){
+  const D0=DATA[key],d=lang==='ko'?{...D0,...D0.ko,cats:D0.cats.map((c,i)=>[D0.ko.cats[i],...c.slice(1)])}:D0;const ko=lang==='ko';const W=lang==='ko'?'만 위안':'万元',WS=lang==='ko'?'만':'万',Y=lang==='ko'?'년':'年';
+  document.getElementById('pname').textContent=d.name;
+  document.getElementById('t-xkt').classList.toggle('on',key==='xkt');
+  document.getElementById('t-hxw').classList.toggle('on',key==='hxw');
+  document.getElementById('heroLead').textContent=d.lead;
+  const pct=(d.cur/d.prev-1)*100,mult=d.cur/d.prev,tot=d.cur+(d.pend||0),multT=tot/d.prev;
+  document.querySelectorAll('.sample').forEach((e,i)=>{if(i===0)e.style.display=d.real?'none':''});
+  document.getElementById('prevTxt').textContent=`2025${Y} ${fmt1(d.prev)}${W}`;
+  document.getElementById('pendTxt').textContent=d.pend?(ko?`+ 발주 완료 ${fmt1(d.pend)}${W}+ → 예상 ×${multT.toFixed(1)}+`:`+ 已下单 ${fmt1(d.pend)}${W}+ → 预计 ×${multT.toFixed(1)}+`):'';
+  ['note1','note2'].forEach(id=>document.getElementById(id).textContent=d.asof?d.asof[lang]:'');
+  const cells=d.pend?[[ko?'2026 입고 기준':'2026 已入库',fmt1(d.cur)+WS,'×'+mult.toFixed(2),'+'+pct.toFixed(1)+'%'],
+                      [ko?'발주 완료분 포함':'含已下单',fmt1(tot)+WS+'+','×'+multT.toFixed(2)+'+','+'+((multT-1)*100).toFixed(0)+'%+']]
+                    :[[ko?'증가액':'增加额','+'+fmt1(d.cur-d.prev)+WS,'×'+mult.toFixed(2),''],[ko?'증가율':'增长率','+'+pct.toFixed(1)+'%','','']];
+  document.getElementById('yoyBox').innerHTML=cells.map(([l,v,x,sm])=>`<div><em>${l}</em><b class="num">${v}</b>${x?`<span class="x num">${x}</span>`:''}${sm?`<small class="num">${sm}</small>`:''}</div>`).join('');
+  counter(document.getElementById('cnt'),d.cur,2000,d.prev,1);
+  const pe=document.getElementById('pct');const s=performance.now();
+  (function f(t){const p=Math.min((t-s)/2000,1),e=1-Math.pow(1-p,4);pe.textContent=`▲ ×${(1+(mult-1)*e).toFixed(2)} · +${(pct*e).toFixed(1)}%`;if(p<1)requestAnimationFrame(f)})(s);
+
+  // bars (2026 = 已入库 + 已下单 stacked)
+  const max=Math.max(d.prev,tot),H=250;
+  const b1=document.getElementById('b1'),b2=document.getElementById('b2');
+  b1.dataset.h=Math.round(d.prev/max*H);b1.dataset.hb=b1.dataset.h;
+  b2.dataset.h=Math.round(tot/max*H);b2.dataset.hb=Math.round(d.cur/max*H);
+  document.getElementById('b1v').textContent=fmt1(d.prev);
+  document.getElementById('b2v').textContent=fmt1(tot)+(d.pend?'+':'');
+  document.getElementById('b2sub').innerHTML=d.pend?(ko?`입고 ${fmt1(d.cur)} + 발주 ${fmt1(d.pend)}+<br>만 위안`:`入库 ${fmt1(d.cur)} + 已下单 ${fmt1(d.pend)}+<br>万元`):W;
+  if(barsIn) setBars();
+
+  // line chart
+  drawChart(d);
+  // cats
+  const cm=Math.max(...d.cats.map(c=>c[2]));
+  document.getElementById('cats').innerHTML=d.cats.map(([n,p,c,nw],i)=>`
+    <div class="cat" style="transition-delay:${i*.12}s"><div class="hd"><span class="nm">${n}</span>${p?`<span class="gr num">×${(c/p).toFixed(2)}<small>+${((c/p-1)*100).toFixed(0)}%</small></span>`:`<span class="gr nw num">NEW ${nw||''}${nw?(ko?'종':'种'):''}</span>`}</div>
+    <div class="track"><div class="tr p"><span>2025</span><div><i data-w="${p/cm*100}"></i></div><b>${p?fmt1(p):'—'}</b></div>
+    <div class="tr c"><span>2026</span><div><i data-w="${c/cm*100}"></i></div><b>${fmt1(c)}</b></div></div></div>`).join('')
+    +(D0.mcon?(()=>{const m=D0.mcon[lang];return `<div class="cat wide mcon" style="transition-delay:.5s"><div class="hd"><span class="nm">${m[0]}</span><span class="badge2">${m[2]}</span></div><p>${m[1]}</p></div>`})():'')
+    +(d.asof?`<div class="fx-note wide" style="grid-column:1/-1;margin-top:2px">${ko?'단위: 만 위안':'单位：万元'} · ${d.asof[lang]}</div>`:'');
+  if(document.getElementById('s-cats').classList.contains('in')) fillCats();
+  // flow
+  document.getElementById('flowLead').textContent=d.flowLead;
+  document.getElementById('flow').innerHTML=d.flow.map((n,i)=>`<div class="node ${i===1?'mid':''}"><b>${n[0]}</b><em>${n[1]}</em></div>${i<2?'<div class="arrow">→</div>':''}`).join('');
+  const P=D0.plan[lang];
+  document.getElementById('planLead').textContent=P.lead;
+  document.getElementById('plan').innerHTML=P.items.map(([h,t,li],i)=>`<div class="pc" style="transition-delay:${i*.1}s"><div class="no">0${i+1}</div><h3>${h}</h3><p>${t}</p><ul>${li.map(x=>`<li>${x}</li>`).join('')}</ul></div>`).join('');
+  window.__q=P.q;if(window.QSteps)QSteps.build();
+  const C=D0.cust;
+  document.getElementById('custLead').textContent=C?C.lead[lang]:(ko?'자료 준비 중':'资料准备中');
+  document.getElementById('custs').innerHTML=C?C.list.map((c,i)=>{const t=c[lang],st=C.stages[lang];
+    return `<div class="cu" style="transition-delay:${i*.14}s;--fill:${((c.stage-1)/3*100).toFixed(1)}%">
+      <div class="cu-hd"><span class="mono">${c.mono}</span><span class="cu-badge ${c.done?'ok':'wip'}">${t.badge}</span></div>
+      <h3>${t.name}</h3><p class="cu-desc">${t.desc}</p>
+      <div class="stg"><span class="stg-ln"><i></i></span>${st.map((n,k)=>`<span class="stg-d ${k+1<c.stage||(k+1===c.stage&&c.done)?'on':k+1===c.stage?'now':''}" style="left:${(k/3*100).toFixed(1)}%"><b></b><em>${n}</em></span>`).join('')}</div>
+      <p class="cu-txt">${t.text}</p>
+      ${t.kpi?`<div class="cu-kpi"><b class="num">${t.kpi}</b><span>${t.kpiL}</span></div>`:''}
+    </div>`}).join(''):'';
+  document.getElementById('goal1').textContent=d.goal?(d.goalMin?(ko?'최소 ':'最低 '):'')+fmt(d.goal)+WS+(d.goalMin?'+':''):(ko?'미정':'待定');
+  document.getElementById('goal2').textContent=d.goal?'+'+((d.goal/tot-1)*100).toFixed(0)+'%'+(d.goalMin?'+':''):'—';
+  document.getElementById('goalNote').textContent=d.goal?(ko?`2026년 예상 ${fmt1(tot)}만 위안(발주 완료분 포함) 대비`+(d.asof?' · '+d.asof.ko:''):`较2026年预计 ${fmt1(tot)}万元（含已下单）`+(d.asof?' · '+d.asof.zh:'')):'';
+  const cum=a=>a.reduce((r,v)=>(r.push((r.length?r[r.length-1]:0)+v),r),[]);
+  const c26=cum(d.m26),t25=cum(d.m25).at(-1),mo=c26.findIndex(v=>v>t25)+1;
+  const ml=document.querySelector('[data-t="monl"]');
+  if(ml)ml.textContent=mo>0?(ko?`2026년 ${mo}월에 이미 2025년 연간 누적을 넘어섰습니다`:`2026年${mo}月，累计交易额已超过2025年全年`):(ko?'매달 작년 같은 달을 넘어섰습니다':'每个月都在超越去年同期');
+}
+
+let barsIn=false;
+function setBars(){document.querySelectorAll('#scene .bar').forEach(b=>{const h=+b.dataset.h,hb=+(b.dataset.hb||h);b.style.setProperty('--h',h+'px');
+  const [pd,mn]=[b.querySelector('.cube.pend'),b.querySelector('.cube:not(.pend)')];mn.style.setProperty('--h',hb+'px');if(pd){pd.style.setProperty('--h',Math.max(0,h-hb)+'px');pd.style.setProperty('--hb',hb+'px')}})}
+function fillCats(){document.querySelectorAll('#cats i[data-w]').forEach(i=>i.style.width=i.dataset.w+'%')}
+
+function drawChart(d){
+  // cumulative amounts; 2026 continues as a dashed line for orders placed but not yet received
+  const ko=lang==='ko',cum=a=>a.reduce((r,v)=>(r.push((r.length?r[r.length-1]:0)+v),r),[]);
+  const c25=cum(d.m25),c26=cum(d.m26),t25=c25.at(-1),last=c26.length-1,proj=d.pend?c26[last]+d.pend:null;
+  const W=800,H=340,L=52,R=86,T=24,B=40,top=Math.max(proj||0,c26[last],t25)*1.12;
+  const step=top>200?100:top>80?50:20,max=Math.ceil(top/step)*step;
+  const x=i=>L+i*(W-L-R)/11, y=v=>T+(H-T-B)*(1-v/max);
+  const path=a=>a.map((v,i)=>(i?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1)).join(' ');
+  let g='';
+  for(let v=0;v<=max;v+=step){const yy=y(v);g+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="rgba(16,36,72,.08)"/><text x="${L-10}" y="${yy+4}" fill="#6b7488" font-size="12" text-anchor="end">${fmt(v)}</text>`}
+  for(let i=0;i<12;i++)g+=`<text x="${x(i)}" y="${H-12}" fill="#6b7488" font-size="12" text-anchor="middle">${i+1}${ko?'월':'月'}</text>`;
+  const p26=path(c26);
+  g+=`<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e6bb0" stop-opacity=".30"/><stop offset="1" stop-color="#1e6bb0" stop-opacity="0"/></linearGradient>
+      <filter id="glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>`;
+  // 2025 full-year reference
+  g+=`<line x1="${L}" x2="${W-R}" y1="${y(t25)}" y2="${y(t25)}" stroke="#93abc6" stroke-dasharray="4 5"/>`;
+  g+=`<text x="${W-R+6}" y="${y(t25)+4}" fill="#6f88a6" font-size="11" font-weight="700">${ko?'25년 연간':'25年全年'}</text>`;
+  g+=`<path class="area" d="${p26} L${x(last)} ${y(0)} L${x(0)} ${y(0)} Z" fill="url(#ga)"/>`;
+  g+=`<path class="draw" d="${path(c25)}" fill="none" stroke="#93abc6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="--len:1600"/>`;
+  g+=`<path class="draw" d="${p26}" fill="none" stroke="#1e6bb0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" style="--len:1600"/>`;
+  g+=`<circle class="area" cx="${x(last)}" cy="${y(c26[last])}" r="6" fill="#1e6bb0"/>`;
+  g+=`<text class="area" x="${x(last)-10}" y="${y(c26[last])+22}" fill="#1662a8" font-size="14" font-weight="800" text-anchor="end">${fmt1(c26[last])}</text>`;
+  g+=`<text class="area" x="${x(11)+8}" y="${y(c25[11])-8}" fill="#6f88a6" font-size="13" font-weight="700">${fmt1(t25)}</text>`;
+  if(proj!==null){
+    g+=`<path class="area" d="M${x(last)} ${y(c26[last])} L${x(11)} ${y(proj)}" stroke="#1e6bb0" stroke-width="3" stroke-dasharray="7 6" fill="none"/>`;
+    g+=`<circle class="area" cx="${x(11)}" cy="${y(proj)}" r="6" fill="#fff" stroke="#1e6bb0" stroke-width="2.5"/>`;
+    g+=`<text class="area" x="${x(11)+10}" y="${y(proj)-4}" fill="#1662a8" font-size="14" font-weight="900">${fmt1(proj)}+</text>`;
+    g+=`<text class="area" x="${x(11)+10}" y="${y(proj)+13}" fill="#6f88a6" font-size="11" font-weight="700">${ko?'발주 포함':'含已下单'}</text>`;
+  }
+  document.getElementById('chart').innerHTML=g;
+  document.getElementById('legend').innerHTML=`<span><i style="background:#93abc6"></i>2025</span><span><i style="background:var(--gold)"></i>2026 ${ko?'입고':'已入库'}</span>`+(proj!==null?`<span><i class="dash"></i>${ko?'발주 완료 (입고 예정)':'已下单（待入库）'}</span>`:'')+`<span style="margin-left:auto;color:var(--dim)">${ko?'단위: 만 위안 · 누적':'单位：万元 · 累计'}</span>`;
+}
+
+// reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const t=e.target;t.classList.add('in');
+  if(t.id==='s-bars'&&!barsIn){barsIn=true;setTimeout(setBars,200)}
+  if(t.id==='s-cats')fillCats();
+  if(t.id==='s-line')t.querySelector('.panel').classList.add('in');
+}),{threshold:.25});
+document.querySelectorAll('.reveal,section').forEach(el=>io.observe(el));
+
+// drag-rotate bars
+(()=>{const st=document.getElementById('stage'),sc=document.getElementById('scene');let ry=-28,rx=-14,down=false,sx=0,sy=0,bx=0,by=0;
+  const set=()=>sc.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`;
+  st.addEventListener('pointerdown',e=>{down=true;sx=e.clientX;sy=e.clientY;bx=ry;by=rx;st.setPointerCapture(e.pointerId)});
+  st.addEventListener('pointermove',e=>{if(!down)return;ry=Math.max(-70,Math.min(70,bx+(e.clientX-sx)*.4));rx=Math.max(-35,Math.min(5,by-(e.clientY-sy)*.2));set()});
+  st.addEventListener('pointerup',()=>down=false);st.addEventListener('pointercancel',()=>down=false);
+  let a=0;(function idle(){if(!down&&barsIn){a+=.004;ry+=Math.sin(a)*.03;set()}requestAnimationFrame(idle)})();
+})();
+
+// tilt hero card
+(()=>{const c=document.getElementById('tilt');
+  c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${px*10}deg) rotateX(${-py*10}deg)`});
+  c.addEventListener('pointerleave',()=>c.style.transform='');
+})();
+
+function route(){let h=(location.hash||'#xkt').slice(1);lang=h.endsWith('-ko')?'ko':'zh';key=h.replace(/-ko$/,'');if(!DATA[key])key='xkt';applyLang();render()}
+window.addEventListener('hashchange',route);route();
+// ===== 3D DEPTH FX =====
+(()=>{
+  // floating 3D shapes
+  const box=document.createElement('div');box.className='shapes';box.setAttribute('aria-hidden','true');
+  // D-SUB connector faces (DB9 / DB15 / DB25), extruded with stacked layers
+  function dsub(top,bot){
+    const pins=(n,y,x0,x1)=>Array.from({length:n},(_,i)=>`<circle cx="${(x0+(x1-x0)*(n>1?i/(n-1):.5)).toFixed(1)}" cy="${y}" r="3.4"/>`).join('');
+    return `<svg viewBox="0 0 220 100" aria-hidden="true"><rect x="3" y="3" width="214" height="94" rx="12"/>`+
+      `<circle cx="23" cy="50" r="9"/><circle cx="23" cy="50" r="3.5"/><circle cx="197" cy="50" r="9"/><circle cx="197" cy="50" r="3.5"/>`+
+      `<path d="M52 20 H168 Q176 20 174.5 28 L166 74 Q164.8 80 158 80 H62 Q55.2 80 54 74 L45.5 28 Q44 20 52 20 Z"/>`+
+      pins(top,38,64,156)+pins(bot,62,70,150)+`</svg>`}
+  const defs=[['db25',76,13,240,.12,13,12,'-12deg',40]];
+  defs.forEach(([t,x,y,w,sp,a,b,tilt,dur])=>{const d=document.createElement('div');d.className='shp dsub';d.dataset.sp=sp;
+    d.style.cssText=`left:${x}%;top:${y}%;width:${w}px;height:${(w/2.2).toFixed(0)}px;--tilt:${tilt};--dur:${dur}s`;
+    const svg=dsub(a,b);d.innerHTML='<div class="cb">'+[0,1,2,3,4].map(k=>`<div class="ly" style="transform:translateZ(${-k*4}px);opacity:${(1-k*.18).toFixed(2)}">${svg}</div>`).join('')+'</div>';box.appendChild(d)});
+  document.body.insertBefore(box,document.body.firstChild);
+  const shp=[...box.children];
+  // scroll-linked section depth
+  const secs=[...document.querySelectorAll('main>section>.wrap')];secs.forEach(s=>s.classList.add('sec3d'));
+  let ticking=false;
+  function onScroll(){ticking=false;const vh=innerHeight,y=scrollY;
+    shp.forEach(d=>d.style.transform=`translate3d(0,${-y*d.dataset.sp}px,0)`);
+    secs.forEach(s=>{const r=s.getBoundingClientRect(),c=(r.top+r.height/2-vh/2)/vh;const p=Math.max(-1,Math.min(1,c));
+      s.style.transform=`perspective(1400px) rotateX(${(-p*7).toFixed(2)}deg) translateZ(${(-Math.abs(p)*90).toFixed(1)}px)`;
+      s.style.opacity=(1-Math.max(0,Math.abs(p)-.35)*.9).toFixed(3)});
+  }
+  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
+  addEventListener('resize',onScroll);onScroll();
+  // tilt + glare on cards (touch & mouse)
+  function bind(el,max){if(el.dataset.tb)return;el.dataset.tb=1;el.classList.add('tilt');
+    if(!el.querySelector(':scope>.glare')){const g=document.createElement('div');g.className='glare';el.appendChild(g)}
+    const mv=e=>{const r=el.getBoundingClientRect(),px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;
+      el.classList.add('hov');el.style.transition='transform .12s ease-out';
+      el.style.transform=`perspective(900px) rotateY(${px*max}deg) rotateX(${-py*max}deg) translateZ(14px)`;
+      el.style.setProperty('--gx',(px+.5)*100+'%');el.style.setProperty('--gy',(py+.5)*100+'%');
+      el.style.setProperty('--dropx',(-px*30)+'px');el.style.setProperty('--dropy',(34-py*20)+'px')};
+    const out=()=>{el.classList.remove('hov');el.style.transition='transform .6s cubic-bezier(.2,.8,.2,1)';el.style.transform='';el.style.removeProperty('--dropx');el.style.removeProperty('--dropy')};
+    el.addEventListener('pointermove',mv);el.addEventListener('pointerdown',mv);
+    el.addEventListener('pointerleave',out);el.addEventListener('pointerup',e=>{if(e.pointerType!=='mouse')out()});el.addEventListener('pointercancel',out)}
+  function bindAll(){document.querySelectorAll('.cat,.pc,.node,.q,.goal').forEach(el=>bind(el,10));document.querySelectorAll('.panel').forEach(el=>bind(el,5))}
+  bindAll();new MutationObserver(bindAll).observe(document.querySelector('main'),{childList:true,subtree:true});
+  const c=document.getElementById('tilt');if(c&&!c.querySelector('.glare')){const g=document.createElement('div');g.className='glare';c.appendChild(g);
+    c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect();c.classList.add('tilt','hov');c.style.setProperty('--gx',(e.clientX-r.left)/r.width*100+'%');c.style.setProperty('--gy',(e.clientY-r.top)/r.height*100+'%')});
+    c.addEventListener('pointerleave',()=>c.classList.remove('hov'))}
+})();
+// ===== STEP PROGRESS (2027 quarters) =====
+// Rebuilt from designbookmark "Step progress" with the same springs:
+// line length k160 c22, step fill k260 c24, check draw k140 c20 (starts 120ms later),
+// pop k500 c14 (kicked to .7 with velocity 6), current-step tint k300 c26.
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S=(x,k=400,c=30)=>({x,v:0,t:x,k,c:reduce?2*Math.sqrt(k):c});
+  const step=(s,dt)=>{const a=-s.k*(s.x-s.t)-s.c*s.v;s.v+=a*dt;s.x+=s.v*dt};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const timers=[];const after=(sec,fn)=>{const t={t:sec,fn};timers.push(t);return t};
+  let clock=0,last=performance.now();
+  const BTN={zh:{title:'2027 推进日程',back:'上一季度',next:'下一季度',again:'重新播放'},ko:{title:'2027 추진 일정',back:'이전 분기',next:'다음 분기',again:'다시 보기'}};
+  const lang=()=>document.documentElement.lang==='ko'?'ko':'zh';
+  const host=document.getElementById('qline');host.className='qsteps';
+  let steps=[],L=S(0,160,22),cur=-1,N=4,userUntil=0,walking=null,el={};
+
+  function build(){
+    const q=window.__q||[];N=q.length;const T=BTN[lang()];
+    host.innerHTML=`<div class="hd"><div class="ttl"><em>ROADMAP</em>${T.title}</div><div class="act"><button type="button" class="bk">${T.back}</button><button type="button" class="next">${T.next}</button></div></div>
+      <div class="trk"><span class="qbar"></span><div class="dots"></div></div><div class="names"></div>`;
+    el={bar:host.querySelector('.qbar'),dots:host.querySelector('.dots'),names:host.querySelector('.names'),back:host.querySelector('.bk'),next:host.querySelector('.next')};
+    steps=q.map(([qn,txt],i)=>{
+      const d=document.createElement('button');d.type='button';d.className='dot';d.style.left=(i/(N-1)*100)+'%';d.setAttribute('aria-label',qn);
+      const num=document.createElement('b');num.textContent=qn;d.appendChild(num);
+      d.insertAdjacentHTML('beforeend','<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>');
+      const path=d.querySelector('path');path.style.strokeDasharray=22;path.style.strokeDashoffset=22;
+      d.addEventListener('click',()=>{userUntil=clock+8;stopWalk();go(i)});
+      el.dots.appendChild(d);
+      const nm=document.createElement('span');nm.innerHTML=txt;nm.style.left=(i/(N-1)*100)+'%';el.names.appendChild(nm);
+      return{d,num,path,nm,f:S(0,260,24),c:S(0,140,20),p:S(1,500,14),on:S(0,300,26)}});
+    el.next.addEventListener('click',()=>{userUntil=clock+8;stopWalk();go(cur===N-1?0:cur+1)});
+    el.back.addEventListener('click',()=>{userUntil=clock+8;stopWalk();go(cur-1)});
+    const keep=Math.max(cur,0);cur=-1;L=S(keep/(N-1),160,22);go(keep,true);
+  }
+  function go(i,silent){
+    i=clamp(i,0,N-1);if(i===cur)return;cur=i;L.t=i/(N-1);
+    steps.forEach((s,k)=>{const done=k<i||(i===N-1&&k===N-1);
+      s.f.t=done?1:0;s.on.t=k===i&&!done?1:0;
+      s.nm.classList.toggle('on',k<=i);s.nm.classList.toggle('cur',k===i);
+      if(done)after(.12,()=>{s.c.t=1});else s.c.t=0;
+      if(silent){s.f.x=s.f.t;s.on.x=s.on.t;if(done)s.c.x=1}});
+    if(!silent){steps[i].p.x=.7;steps[i].p.v=6}
+    const T=BTN[lang()];el.next.textContent=i===N-1?T.again:T.next;el.back.disabled=i===0;
+  }
+  function stopWalk(){if(walking){const k=timers.indexOf(walking);if(k>-1)timers.splice(k,1);walking=null}}
+  // when the page is shown: start at Q1 and walk through once, unless touched
+  window.QSteps={build,enter(){stopWalk();cur=-1;L.x=0;L.v=0;steps.forEach(s=>{s.f.x=s.on.x=s.c.x=0;s.f.v=s.on.v=s.c.v=0});
+    after(.5,()=>{go(0);(function walk(){if(cur<N-1&&clock>=userUntil){walking=after(1.4,()=>{if(clock>=userUntil){go(cur+1);walk()}})}})()})}};
+  build();
+
+  (function loop(now){const dt=Math.min((now-last)/1000,1/30);last=now;clock+=dt;
+    for(let i=timers.length-1;i>=0;i--)if((timers[i].t-=dt)<=0)timers.splice(i,1)[0].fn();
+    for(let k=0;k<4;k++){const h=dt/4;step(L,h);steps.forEach(s=>{step(s.f,h);step(s.c,h);step(s.p,h);step(s.on,h)})}
+    if(el.bar){el.bar.style.width=(clamp(L.x,0,1)*100).toFixed(3)+'%';
+      steps.forEach(s=>{const f=clamp(s.f.x,0,1),o=clamp(s.on.x,0,1);
+        s.d.style.background=f>.01?`color-mix(in srgb, var(--gold) ${(f*100).toFixed(1)}%, #ffffff)`:o>.01?`color-mix(in srgb, #0e2340 ${(o*100).toFixed(1)}%, #ffffff)`:'';
+        s.d.style.borderColor=f>.5||o>.5?'transparent':'';
+        s.d.style.color=o>.5?'#fff':'';
+        s.num.style.opacity=(1-f).toFixed(3);
+        s.path.style.strokeDashoffset=(22*(1-clamp(s.c.x,0,1))).toFixed(2);
+        s.d.style.transform=`scale(${s.p.x.toFixed(4)})`})}
+    requestAnimationFrame(loop)})(last);
+})();
+// ===== SIDEBAR PAGING =====
+// Rebuilt from designbookmark "Sidebar collapse" with the same springs:
+// width k260 c24, toggle arrow k300 c22, highlight k380 c28, labels k300 c26,
+// labels cascade in on open (60ms + 40ms each) and fade together on close.
+// Same integrator as motion.js: semi-implicit Euler, 4 substeps, dt capped at 1/30s.
+(()=>{
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const S=(x,k=400,c=30)=>({x,v:0,t:x,k,c:reduce?2*Math.sqrt(k):c});
+  const step=(s,dt)=>{const a=-s.k*(s.x-s.t)-s.c*s.v;s.v+=a*dt;s.x+=s.v*dt};
+  const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const timers=[];const after=(sec,fn)=>timers.push({t:sec,fn});
+  const comps=[];let last=performance.now();
+  (function loop(now){const dt=Math.min((now-last)/1000,1/30);last=now;
+    for(let i=timers.length-1;i>=0;i--)if((timers[i].t-=dt)<=0)timers.splice(i,1)[0].fn();
+    for(let k=0;k<4;k++)comps.forEach(c=>c.frame(dt/4));comps.forEach(c=>c.render());requestAnimationFrame(loop)})(last);
+
+  const OPEN_W=212,CLOSED_W=64;
+  const $=id=>document.getElementById(id);
+  const side=$('side'),col=$('col'),hl=$('hl'),main=document.querySelector('main');
+  const its=[...side.querySelectorAll('.it')];
+  const labels=[...side.querySelectorAll('.lb')].map(el=>({el,s:S(1,300,26)}));
+  const W=S(OPEN_W,260,24),R=S(0,300,22),Y=S(0,380,28);
+  const PAGES=['s-hero','s-bars','s-line','s-cats','s-cust','s-flow','s-plan','s-close'].map(id=>$(id));
+  const TXT={zh:{brand:'2026 报告',items:['封面','年度对比','累计走势','各品类增长','主要客户','合作模式','2027年合作方案','展望与目标'],col:['收起侧栏','展开侧栏']},
+             ko:{brand:'2026 보고',items:['표지','연도별 비교','누적 추이','품목별 성장','주요 고객사','협력 구조','2027년 협력 방안','목표와 마무리'],col:['사이드바 접기','사이드바 펴기']}};
+  const lang=()=>document.documentElement.lang==='ko'?'ko':'zh';
+  let open=true,cur=-1;
+
+  // the contact footer belongs on the last page
+  const foot=document.querySelector('main>footer');if(foot)PAGES[PAGES.length-1].querySelector('.wrap').appendChild(foot);
+
+  function texts(){const T=TXT[lang()];$('sbBrand').textContent=T.brand;
+    its.forEach((b,i)=>{b.querySelector('.lb').textContent=T.items[i];b.setAttribute('aria-label',T.items[i])});
+    col.setAttribute('aria-label',open?T.col[0]:T.col[1])}
+  function setOpen(o){open=o;col.setAttribute('aria-expanded',o);texts();
+    W.t=o?OPEN_W:CLOSED_W;R.t=o?0:1;
+    labels.forEach((l,i)=>o?after(.06+i*.04,()=>{if(open)l.s.t=1}):(l.s.t=0))}
+
+  // make a page's entrance effects play again each time it is shown
+  function resetFx(sec){
+    sec.classList.remove('in');sec.querySelectorAll('.in').forEach(e=>e.classList.remove('in'));
+    if(sec.id==='s-bars'){barsIn=false;document.querySelectorAll('#scene .bar').forEach(b=>{b.style.setProperty('--h','0px');b.querySelectorAll('.cube').forEach(c=>{c.style.setProperty('--h','0px');c.style.setProperty('--hb','0px')})})}
+    if(sec.id==='s-cats')sec.querySelectorAll('#cats i[data-w]').forEach(i=>i.style.width='0');
+  }
+  function go(i){
+    i=clamp(i,0,PAGES.length-1);if(i===cur)return;
+    const dir=i>cur?1:-1,prev=PAGES[cur],next=PAGES[i];
+    if(prev){prev.style.setProperty('--dxo',(-70*dir)+'px');prev.style.setProperty('--ryo',(9*dir)+'deg');
+      prev.classList.remove('enter');prev.classList.add('leave');
+      setTimeout(()=>{prev.classList.remove('leave','cur');resetFx(prev)},340)}
+    resetFx(next);next.scrollTop=0;
+    next.style.setProperty('--dx',(70*dir)+'px');next.style.setProperty('--ry',(-9*dir)+'deg');
+    next.classList.add('cur','enter');setTimeout(()=>next.classList.remove('enter'),640);
+    if(i===0&&cur!==-1)render();      // replays the sales counter
+    if(PAGES[i].id==='s-plan'&&window.QSteps)QSteps.enter();
+    cur=i;
+    its.forEach((b,k)=>{b.classList.toggle('on',k===i);if(k===i)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current')});
+    Y.t=its[i].offsetTop;
+    $('pgN').innerHTML=`<b>${String(i+1).padStart(2,'0')}</b> / ${String(PAGES.length).padStart(2,'0')}`;
+    $('pgPrev').disabled=i===0;$('pgNext').disabled=i===PAGES.length-1;
+    document.querySelectorAll('.shp').forEach(d=>d.style.transform=`translate3d(0,${(-i*70*d.dataset.sp).toFixed(1)}px,0)`);
+  }
+  col.addEventListener('click',()=>setOpen(!open));
+  its.forEach((b,i)=>b.addEventListener('click',()=>go(i)));
+  $('pgPrev').addEventListener('click',()=>go(cur-1));$('pgNext').addEventListener('click',()=>go(cur+1));
+  addEventListener('keydown',e=>{if(['ArrowRight','PageDown'].includes(e.key))go(cur+1);if(['ArrowLeft','PageUp'].includes(e.key))go(cur-1)});
+  // swipe left / right to turn pages (not on the rotatable 3D bars)
+  let sx=null,sy=0;
+  main.addEventListener('pointerdown',e=>{if(e.target.closest('.stage'))return;sx=e.clientX;sy=e.clientY});
+  main.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx,dy=e.clientY-sy;sx=null;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.4)go(cur+(dx<0?1:-1))});
+  main.addEventListener('pointercancel',()=>sx=null);
+  addEventListener('hashchange',()=>setTimeout(()=>{texts();if(cur===1)setTimeout(()=>{barsIn=true;setBars()},50)},0));
+
+  const Motion_side={frame(dt){[W,R,Y].forEach(s=>step(s,dt));labels.forEach(l=>step(l.s,dt))},
+    render(){
+      side.style.width=W.x.toFixed(2)+'px';
+      main.style.setProperty('--sbw',(W.x+30).toFixed(1)+'px');
+      col.firstElementChild.style.transform=`rotate(${(180*R.x).toFixed(2)}deg)`;
+      col.style.right=(clamp(R.x,0,1)*4).toFixed(2)+'px';
+      side.querySelector('.logo').style.opacity=clamp(1-R.x*2,0,1).toFixed(3);
+      labels.forEach(l=>{const o=clamp(l.s.x,0,1);l.el.style.opacity=o.toFixed(3);l.el.style.transform=`translateX(${((1-o)*-10).toFixed(2)}px)`});
+      hl.style.transform=`translateY(${Y.x.toFixed(2)}px)`;
+    }};
+  comps.push(Motion_side);
+  texts();
+  // start folded to the icon rail on narrow screens (iPad portrait)
+  if(innerWidth<900){open=false;W.x=W.t=CLOSED_W;R.x=R.t=1;labels.forEach(l=>l.s.x=l.s.t=0);col.setAttribute('aria-expanded',false)}
+  go(0);Y.x=Y.t;
+})();
+</script>
+</body>
+</html>
